@@ -1,0 +1,109 @@
+package main;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+import compactador.*;
+import meurandomaccessfile.MeuRandomAccessFile;
+
+public class Main 
+{	
+	private static void ptl (String s)
+	{
+		System.out.println(s);
+	};
+	
+	private static void pt (String s)
+	{
+		System.out.print(s);
+	};
+	
+	public static void main(String[] args)
+	{
+		try
+		{
+			BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
+			
+			forever : for (;;)
+			{   
+				ptl("------------------------------");
+				ptl("|      THIS.COMPACTADOR      |");
+				ptl("------------------------------");
+				ptl("|    1 - Compactar           |");
+				ptl("|    2 - Descompactar        |");
+				ptl("|    3 - Sair                |");
+				ptl("------------------------------");
+				pt("-> ");
+				
+				String s = teclado.readLine();
+				
+				if (s.equals("1"))
+				{
+					pt("--> Informe o local do arquivo a ser compactado: ");
+					
+					try
+					{
+						String localArq = teclado.readLine();
+						
+						String extensao = localArq.substring(localArq.lastIndexOf(".")+1, localArq.length());
+						
+				        if(extensao.equals("god"))
+				        {
+				        	ptl("Não é possível compactar esse tipo de arquivo.");
+				        	continue;
+				        }
+				        
+				        Compactador c = new Compactador(localArq);
+						ptl("                    C O M P A C T A N D O . . .");
+						c.compactar();
+					}
+					catch(Exception e)
+					{
+						ptl("                    Nome de arquivo inválido!!!");
+						continue;
+					}	
+					
+					ptl("                                       COMPACTADO!!");
+				}
+				else
+				if (s.equals("2"))
+				{
+					pt("--> Informe o local do arquivo a ser descompactado: ");
+					
+					try
+					{					
+						String localArq = teclado.readLine();
+						
+						String extensao = localArq.substring(localArq.lastIndexOf(".")+1, localArq.length());
+						
+						if(!(extensao.equals("god")))
+						{
+							ptl("Só é permitido descompactar arquivos do tipo *.god.");
+							continue;
+						}
+						
+						Compactador c = new Compactador(localArq);
+						ptl("                    D E S C O M P A C T A N D O !!");
+						c.descompactar();
+					}
+					catch(Exception e)
+					{
+						ptl("                       Nome de arquivo inválido!!!");
+						continue;
+					}	
+					
+					ptl("                                       DESCOMPACTADO!!");
+				}				
+				else
+				if (s.equals("3"))
+					break forever;
+				else
+					ptl("                        Opção inválida. Favor redigite");
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+}
